@@ -6,3 +6,4 @@ billno  通道的订单号
 
 alter table ymf_order add order_sn VARCHAR(50) not null comment '订单号';
 alter table ymf_order add billno  VARCHAR(50) not null comment '通道订单号订单号';
+alter table ymf_order add gold_amount  VARCHAR(50) not null comment '实付金额';

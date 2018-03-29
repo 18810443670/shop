@@ -479,6 +479,7 @@ class ControllerCheckoutCheckout extends Controller
         $data['payment_method'] = $order['payment_method'];
 
         $payment_code = $order['payment_code'];
+
         /**
          * 添加支付的逻辑
          */

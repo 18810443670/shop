@@ -20,10 +20,12 @@ class ControllerExtensionPaymentGateway extends Controller
     function index($order)
     {
         header('Content-type:text/html;charset=utf-8');
+        //生成新的通道订单号
+        $orderSign = $this->model_checkout_order->editOrderSign($order['order_id']);
         $params = [
             'appid' => GOLD_APPID,
             'amount' => intval($order['total']) * 100,
-            'order_id' => $order['order_sn'],
+            'order_id' => $orderSign,
             'bank' => GOLD_BANK,
             'action' => $this->action,
             'notify' => GOLD_NOTIFY,
