@@ -1,16 +1,40 @@
 <?php
-// HTTP
-define('HTTP_SERVER', 'http://shop.codepay.cc/admin/');
-define('HTTP_CATALOG', 'http://shop.codepay.cc/');
 
-// HTTPS
-define('HTTPS_SERVER', 'http://shop.codepay.cc/admin/');
-define('HTTPS_CATALOG', 'http://shop.codepay.cc/');
 
-// DIR
-define('DIR_APPLICATION', '/home/web/opencart/upload/admin/');
-define('DIR_SYSTEM', '/home/web/opencart/upload/system/');
-define('DIR_IMAGE', '/home/web/opencart/upload/image/');
+
+
+
+
+
+//判断是线上还是测试
+if (strpos($_SERVER['REMOTE_ADDR'], '192.168') !== false) {
+    // HTTP
+    define('HTTP_SERVER', 'http://shop.codepay.cc/admin/');
+    define('HTTP_CATALOG', 'http://shop.codepay.cc/');
+    // HTTPS
+    define('HTTPS_SERVER', 'http://shop.codepay.cc/admin/');
+    define('HTTPS_CATALOG', 'http://shop.codepay.cc/');
+    // DIR
+    define('DIR_APPLICATION', '/home/web/shop/admin/');
+    define('DIR_SYSTEM', '/home/web/shop/system/');
+    define('DIR_IMAGE', '/home/web/shop/image/');
+}else{
+    // HTTP
+    define('HTTP_SERVER', 'http://mall.szyimafu.com/admin/');
+    define('HTTP_CATALOG', 'http://mall.szyimafu.com/');
+    // HTTPS
+    define('HTTPS_SERVER', 'http://mall.szyimafu.com/admin/');
+    define('HTTPS_CATALOG', 'http://mall.szyimafu.com/');
+    // DIR
+    define('DIR_APPLICATION', '/home/wwwroot/shop/admin/');
+    define('DIR_SYSTEM', '/home/wwwroot/shop/system/');
+    define('DIR_IMAGE', '/home/wwwroot/shop/image/');
+}
+
+
+
+
+
 define('DIR_STORAGE', DIR_SYSTEM . 'storage/');
 define('DIR_CATALOG', '/home/web/opencart/upload/catalog/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');

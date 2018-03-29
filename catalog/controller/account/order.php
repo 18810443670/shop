@@ -253,15 +253,15 @@ class ControllerAccountOrder extends Controller {
 			// History
 			$data['histories'] = array();
 
-			$results = $this->model_account_order->getOrderHistories($this->request->get['order_id']);
-
-			foreach ($results as $result) {
-				$data['histories'][] = array(
-					'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-					'status'     => $result['status'],
-					'comment'    => $result['notify'] ? nl2br($result['comment']) : ''
-				);
-			}
+//			$results = $this->model_account_order->getOrderHistories($this->request->get['order_id']);
+//
+//			foreach ($results as $result) {
+//				$data['histories'][] = array(
+//					'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+//					'status'     => $result['status'],
+//					'comment'    => $result['notify'] ? nl2br($result['comment']) : ''
+//				);
+//			}
 
 			$data['continue'] = $this->url->link('account/order');
 
