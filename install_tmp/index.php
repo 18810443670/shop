@@ -1,7 +1,7 @@
 <?php
 // Error Reporting
 error_reporting(E_ALL);
-
+echo  111;
 // Check if SSL
 if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) || $_SERVER['SERVER_PORT'] == 443) {
 	$protocol = 'https://';
