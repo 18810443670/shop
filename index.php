@@ -17,7 +17,6 @@ if (!defined('DIR_APPLICATION')) {
 // VirtualQMOD
 require_once('./vqmod/vqmod.php');
 VQMod::bootup();
-echo 1111;die;
 // VQMODDED Startup
 require_once(VQMod::modCheck(DIR_SYSTEM . 'startup.php'));
 
