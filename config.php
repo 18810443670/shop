@@ -1,9 +1,9 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://shop.codepay.cc/');
+define('HTTP_SERVER', 'http://mall.szyimafu.com/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://shop.codepay.cc/');
+define('HTTPS_SERVER', 'http://mall.szyimafu.com/');
 
 // DIR
 define('DIR_APPLICATION', '/home/wwwroot/shop/catalog/');
