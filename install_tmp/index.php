@@ -1,7 +1,6 @@
 <?php
 // Error Reporting
 error_reporting(E_ALL);
-echo  111;
 // Check if SSL
 if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) || $_SERVER['SERVER_PORT'] == 443) {
 	$protocol = 'https://';
@@ -32,5 +31,5 @@ define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
-
+echo  111222;
 start('install');
