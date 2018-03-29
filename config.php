@@ -6,9 +6,9 @@ define('HTTP_SERVER', 'http://shop.codepay.cc/');
 define('HTTPS_SERVER', 'http://shop.codepay.cc/');
 
 // DIR
-define('DIR_APPLICATION', '/home/web/opencart/upload/catalog/');
-define('DIR_SYSTEM', '/home/web/opencart/upload/system/');
-define('DIR_IMAGE', '/home/web/opencart/upload/image/');
+define('DIR_APPLICATION', '/home/wwwroot/shop/catalog/');
+define('DIR_SYSTEM', '/home/wwwroot/shop/system/');
+define('DIR_IMAGE', '/home/wwwroot/shop/image/');
 define('DIR_STORAGE', DIR_SYSTEM . 'storage/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/theme/');
