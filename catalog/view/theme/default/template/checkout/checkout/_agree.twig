@@ -1,0 +1,23 @@
+<div class="checkout-section" id="agree-section">
+  {% if entry_newsletter %}
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="newsletter" value="1" checked /> <span>{{ entry_newsletter }}</span>
+    </label>
+  </div>
+  {% endif %}
+  {% if text_register %}
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="privacy" value="1" /> <span>{{ text_register }}</span>
+    </label>
+  </div>
+  {% endif %}
+  {% if text_payment_method %}
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="terms" value="1" /> <span>{{ text_payment_method }}</span>
+    </label>
+  </div>
+  {% endif %}
+</div>
