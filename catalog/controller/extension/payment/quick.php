@@ -37,6 +37,7 @@ class ControllerExtensionPaymentQuick extends Controller
         ];
         $params['sign'] = $this->getSign($params);
         $html = self::send(GOLD_PAYURL, json_encode($params));
+        var_dump($html);die;
         return json_decode($html)->url ?? '';
     }
 
