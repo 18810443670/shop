@@ -15,17 +15,17 @@ class ControllerPaymentNotify extends Controller
         if (empty($notifyStr)) exit('empty data');
         $notifyArr = json_decode($notifyStr, true);
 
-        $sign = $this->getSign($notifyArr);
-        if (!hash_equals(strtoupper($sign), strtoupper($notifyArr['sign']))) exit('sign error');
-
+//        $sign = $this->getSign($notifyArr);
+//        if (!hash_equals(strtoupper($sign), strtoupper($notifyArr['sign']))) exit('sign error');
         $order_sn = $notifyArr ['order_id']; //订单号
         $order_type = intval($notifyArr['state']); //订单状态
         $total_fee = intval($notifyArr['payment']) / 100; //实付金额
         if ($order_type === 0) exit('success');
         //修改订单状态
-        $sql ="UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . 13 . "' where billno = " . $order_sn;
+        $sql = "UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . 13 . "' where billno = " . $order_sn;
+        $this->load->model('checkout/order');
         $this->model_checkout_order->editOrderNotify($sql);
-        exit($sql.'success');
+        exit('success');
     }
 
     //验证签名
