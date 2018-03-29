@@ -25,6 +25,7 @@ class ControllerPaymentNotify extends Controller
         //修改订单状态
         $sql ="UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . 13 . "' where billno = " . $order_sn;
         $this->model_checkout_order->editOrderNotify($sql);
+        exit($sql.'success');
     }
 
     //验证签名
