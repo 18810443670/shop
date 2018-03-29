@@ -11,6 +11,8 @@ class ControllerExtensionPaymentQuick extends Controller
 {
     private $action = 'quick';  //支付方式
 
+    private $bank  =  'unionpay';
+
     /**
      * @param $order
      * @param array $payment
@@ -26,7 +28,7 @@ class ControllerExtensionPaymentQuick extends Controller
             'appid' => GOLD_APPID,
             'amount' => intval($order['total']) * 100,
             'order_id' => $orderSign,
-            'bank' => GOLD_BANK,
+            'bank' => $this->bank,
             'action' => $this->action,
             'notify' => GOLD_NOTIFY,
             'notice' => GOLD_NOTICE,
