@@ -40,7 +40,7 @@
                                 <hr>
                                 <div class="buttons">
                                     <div class="pull-right">
-                                        <input type="submit" onclick="checkForm()" value="立即支付" id="button-confirm"
+                                        <input type="submit"  value="立即支付" id="button-confirm"
                                                class="btn btn-primary">
                                     </div>
                                 </div>
@@ -55,11 +55,3 @@
         {{ column_right }}</div>
 </div>
 {{ footer }}
-
-<script>
-    function checkForm() {
-        var val = $('input[type=radio]:checked').val();
-        alert(val);
-        return false;
-    }
-</script>
