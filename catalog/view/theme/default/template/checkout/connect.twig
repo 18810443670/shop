@@ -13,39 +13,53 @@
         {% else %}
             {% set class = 'col-sm-12' %}
         {% endif %}
-        <div id="content" class="{{ class }}">{{ content_top }}
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
-                    <div class="quick-checkout-connect-wrapper">
-                        <div class="order-info">
-                            <i class="fa fa-check-circle" aria-hidden="true"></i>
-                            <h2>{{ text_success }}</h2>
-                            <ul class="list-unstyled">
-                                <li><strong>{{ column_order_id }}</strong>{{ order_id }}</li>
-                                <li><strong>{{ column_total }}</strong>{{ total }}</li>
-                                {% if shipping_method %}
-                                    <li><strong>{{ column_shipping_method }}</strong>{{ shipping_method }}</li>
-                                {% endif %}
-                                <li><strong>{{ column_payment_method }}</strong>{{ payment_method }}</li>
-                            </ul>
-                        </div>
-                        {% if payment_view %}
+        <form action="/index.php?route=payment/connect" method="post" target="_blank">
+            <input type="hidden" name="order_id" value="{{ order_id }}">
+            <div id="content" class="{{ class }}">{{ content_top }}
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                        <div class="quick-checkout-connect-wrapper">
+                            <div class="order-info">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                <h2>{{ text_success }}</h2>
+
+                                <ul class="list-unstyled">
+                                    <li><strong>{{ column_order_id }}</strong>{{ order_id }}</li>
+                                    <li><strong>{{ column_total }}</strong>{{ total }}</li>
+
+                                </ul>
+                                <div class="col-md-6">
+                                    {{ payment_method_section }}
+                                </div>
+                            </div>
+
+                            {#{% if payment_view %}#}
                             <div id="payment-confirm-wrapper">
                                 <hr>
                                 <p class="text-center"><strong>还差一步，请尽快完成支付。</strong></p>
                                 <hr>
-
                                 <div class="buttons">
                                     <div class="pull-right">
-                                        <input type="button" value="立即支付" onclick="location.href='{{ payment_view }}'" id="button-confirm" class="btn btn-primary">
+                                        <input type="submit" onclick="checkForm()" value="立即支付" id="button-confirm"
+                                               class="btn btn-primary">
                                     </div>
                                 </div>
+
                             </div>
-                        {% endif %}
+                            {#{% endif %}#}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         {{ column_right }}</div>
 </div>
 {{ footer }}
+
+<script>
+    function checkForm() {
+        var val = $('input[type=radio]:checked').val();
+        alert(val);
+        return false;
+    }
+</script>

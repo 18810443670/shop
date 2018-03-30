@@ -134,7 +134,7 @@ class ControllerCheckoutCheckout extends Controller
 
         $data['shipping_method_section'] = $this->renderShippingMethodSection();
         $data['payment_method_section'] = $this->renderPaymentMethodSection();
-
+//        var_dump( $data['payment_method_section']);
         $data['cart_section'] = $this->renderCartSection();
         $data['comment_section'] = $this->renderCommentSection();
         $data['agree_section'] = $this->renderAgreeSection();
@@ -280,9 +280,9 @@ class ControllerCheckoutCheckout extends Controller
         $redirect = '';
         $error = array();
 
-        if ($this->request->server['REQUEST_METHOD'] != 'POST') {
-            $this->response->redirect($this->url->link('checkout/cart'));
-        }
+//        if ($this->request->server['REQUEST_METHOD'] != 'POST') {
+//            $this->response->redirect($this->url->link('checkout/cart'));
+//        }
 
         if (!$this->isLogged()) {
             $redirect = $this->url->link('account/login');
@@ -290,11 +290,11 @@ class ControllerCheckoutCheckout extends Controller
             return;
         }
 
-        if (!$this->isValidCart()) {
-            $redirect = $this->url->link('checkout/cart');
-            $this->jsonOutput($error, $redirect);
-            return;
-        }
+//        if (!$this->isValidCart()) {
+//            $redirect = $this->url->link('checkout/cart');
+//            $this->jsonOutput($error, $redirect);
+//            return;
+//        }
 
         $this->log($this->request->post);
 
@@ -338,16 +338,16 @@ class ControllerCheckoutCheckout extends Controller
         }
 
         // Payment method
-        if (!$this->getPostValue('payment_method')) {
-            $error['payment_method']['warning'] = $this->language->get('error_payment');
-        } else {
-            $code = $this->getPostValue('payment_method');
-            if (!in_array($code, ['gateway', 'quick'])) {
-                $error['payment_method']['warning'] = $this->language->get('error_payment_unavailable');
-            } else {
-                $order_data['payment_method'] = $code;
-            }
-        }
+//        if (!$this->getPostValue('payment_method')) {
+//            $error['payment_method']['warning'] = $this->language->get('error_payment');
+//        } else {
+//            $code = $this->getPostValue('payment_method');
+//            if (!in_array($code, ['gateway', 'quick'])) {
+//                $error['payment_method']['warning'] = $this->language->get('error_payment_unavailable');
+//            } else {
+//                $order_data['payment_method'] = $code;
+//            }
+//        }
         // Shipping method
         if ($this->hasShipping()) {
             if (empty($error['shipping_address'])) {
@@ -416,13 +416,13 @@ class ControllerCheckoutCheckout extends Controller
         $order_id = $this->model_checkout_checkout->createOrder($order_data);
         $this->cart->clear();
 
-        // Change order status to Unpaid
-        if ($order_data['payment_method'] != 'cod') {
-            $this->model_checkout_order->addOrderHistory($order_id, 0);
-        } else { // cod order does not need unpaid status
-            $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_cod_order_status_id'));
-        }
-
+//        // Change order status to Unpaid
+//        if ($order_data['payment_method'] != 'cod') {
+//            $this->model_checkout_order->addOrderHistory($order_id, 0);
+//        } else { // cod order does not need unpaid status
+//            $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_cod_order_status_id'));
+//        }
+        $redirect = $this->url->link('checkout/checkout/connect', 'order_id=' . $order_id);
         $this->jsonOutput($error, $redirect);
         return;
     }
@@ -441,11 +441,18 @@ class ControllerCheckoutCheckout extends Controller
     public function connect()
     {
         $this->log(__FUNCTION__);
-        if (!isset($this->session->data['order_id']) || (int)$this->session->data['order_id'] <= 0) {
-            $this->response->redirect($this->url->link('common/home'));
+
+        //有限判断request里的order_id
+
+        if(isset($this->request->get['order_id'])){
+            $data['order_id'] = $order_id = (int)$this->request->get['order_id'];
+        }else{
+            if (!isset($this->session->data['order_id']) || (int)$this->session->data['order_id'] <= 0) {
+                $this->response->redirect($this->url->link('common/home'));
+            }
+            $data['order_id'] = $order_id = (int)$this->session->data['order_id'];
         }
 
-        $data['order_id'] = $order_id = (int)$this->session->data['order_id'];
         $order = $this->model_checkout_order->getOrder($order_id);
         if (!$order) {
             $this->response->redirect($this->url->link('common/home'));
@@ -483,12 +490,13 @@ class ControllerCheckoutCheckout extends Controller
         /**
          * 添加支付的逻辑
          */
-        if (in_array($payment_code, ['gateway', 'quick'])) {
-            $data['payment_view'] = $this->load->controller('extension/payment/' . $payment_code, $order);
-        } else {
-            $data['payment_view'] = false;
-        }
+//        if (in_array($payment_code, ['gateway', 'quick'])) {
+//            $data['payment_view'] = $this->load->controller('extension/payment/' . $payment_code, $order);
+//        } else {
+//            $data['payment_view'] = false;
+//        }
 
+        $data['payment_method_section'] = $this->renderPaymentMethodSection();
         $data['href'] = $this->url->link('account/order/info', 'order_id=' . $order['order_id']);
 
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -628,7 +636,7 @@ class ControllerCheckoutCheckout extends Controller
             'gateway' => [
                 'code' => 'gateway',
                 'title' => '网关支付',
-                'sort_order' => 1
+                'sort_order' => 0
             ],
             'quick' => [
                 'code' => 'quick',
@@ -638,12 +646,14 @@ class ControllerCheckoutCheckout extends Controller
         ];
 
 
-        if (isset($this->session->data['payment_method']['code'])) {
-            $data['code'] = $this->session->data['payment_method']['code'];
-        } else {
-            $data['code'] = '';
-        }
-
+//        if (isset($this->session->data['payment_method']['code'])) {
+//            $data['code'] = $this->session->data['payment_method']['code'];
+//        } else {
+//            $data['code'] = '';
+//        }
+        //设置默认选中的支付方式
+        $data['code'] = 'gateway';
+//        var_dump($data['code']);die;
         if (isset($this->session->data['comment'])) {
             $data['comment'] = $this->session->data['comment'];
         } else {

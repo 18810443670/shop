@@ -17,10 +17,12 @@ class ControllerExtensionPaymentGateway extends Controller
      * @param bool $is_getsign
      * @return mixed
      */
-    function index($order)
+    function index($order_id)
     {
         header('Content-type:text/html;charset=utf-8');
         //生成新的通道订单号
+        $this->load->model('checkout/order');
+        $order = $this->model_checkout_order->getOrder($order_id);
         $orderSign = $this->model_checkout_order->editOrderSign($order['order_id']);
         $params = [
             'appid' => GOLD_APPID,

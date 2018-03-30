@@ -113,14 +113,15 @@ class ModelCheckoutCheckout extends Model
             $order_data['telephone'] = array_get($this->session->data, 'guest.telephone', '');
             $order_data['fax'] = array_get($this->session->data, 'guest.fax', '');
         }
-        if ($orderData['payment_method'] == 'quick') {
-            $order_data['payment_code'] = 'quick';
-            $order_data['payment_method'] = '快捷支付';
-        } else {
-            $order_data['payment_code'] = 'gateway';
-            $order_data['payment_method'] = '银联网关';
+        if(isset($orderData['payment_method'])){
+            if ($orderData['payment_method'] == 'quick') {
+                $order_data['payment_code'] = 'quick';
+                $order_data['payment_method'] = '快捷支付';
+            } else {
+                $order_data['payment_code'] = 'gateway';
+                $order_data['payment_method'] = '银联网关';
+            }
         }
-     
         if (array_get($this->session->data, 'shipping_method.code')) {
             if ($this->cart->hasshipping()) {
                 $order_data['shipping_code'] = $this->session->data['shipping_method']['code'];
