@@ -40,7 +40,7 @@
                                 <hr>
                                 <div class="buttons">
                                     <div class="pull-right">
-                                        <input type="submit"  value="立即支付" id="button-confirm"
+                                        <input type="submit" value="立即支付" id="button-confirm"
                                                class="btn btn-primary">
                                     </div>
                                 </div>
@@ -55,3 +55,21 @@
         {{ column_right }}</div>
 </div>
 {{ footer }}
+
+<script>
+    setInterval(function () {
+        $.ajax({
+            url: '/index.php?route=checkout/checkout/checkOrder&order_id=' +{{ order_id }},
+            method: 'GET',
+            success: function (res) {
+                res = JSON.parse(res);
+                if (res.status == 200) {
+                    location.href = '/index.php?route=checkout/success';
+                }
+            },
+            error: function (res) {
+                console.log('未知错误');
+            }
+        });
+    }, 2000)
+</script>

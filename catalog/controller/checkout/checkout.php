@@ -35,6 +35,24 @@ class ControllerCheckoutCheckout extends Controller
         }
     }
 
+    public function checkOrder()
+    {
+        $ret = [
+            'status' => 100
+        ];
+        if (isset($this->request->get['order_id'])) {
+            $order = $this->model_checkout_order->getOrder(intval($this->request->get['order_id']));
+            if (is_array($order) && count($order)) {
+                if ($order['order_status_id'] == 13) {
+                    $ret = [
+                        'status' => 200
+                    ];
+                }
+            }
+        }
+        exit(json_encode($ret));
+    }
+
     public function index()
     {
         if (!$this->isValidCart()) {
@@ -444,9 +462,9 @@ class ControllerCheckoutCheckout extends Controller
 
         //有限判断request里的order_id
 
-        if(isset($this->request->get['order_id'])){
+        if (isset($this->request->get['order_id'])) {
             $data['order_id'] = $order_id = (int)$this->request->get['order_id'];
-        }else{
+        } else {
             if (!isset($this->session->data['order_id']) || (int)$this->session->data['order_id'] <= 0) {
                 $this->response->redirect($this->url->link('common/home'));
             }
